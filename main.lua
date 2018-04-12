@@ -10,10 +10,13 @@
 
 display.setStatusBar(display.HiddenStatusBar)
 
-local answerText
+local answerText 
 local answer = 0
 local numberA
 local numberB
+local numberANegative = false
+local numberBNegative = false
+local numberAAndBNegative = false
 
 local instructions = display.newText( 'Enter the two numbers to be multiplied:', display.contentCenterX, 200, native.systemFont, 110 )
 instructions.id = "instructions"
@@ -35,13 +38,41 @@ local function onEnterClicked( event )
 	-- Defining Variables
 	numberA = numberATextField.text
 	numberB = numberBTextField.text
+	-- Check for negative
+	if string.match( numberA, '%-' ) and string.match( numberB, '%-' ) then 
+		
+		numberA = string.gsub(numberA, '%-', '' )
+		numberB = string.gsub(numberB, '%-', '' )
+		numberAAndBNegative = 1
+		print("both -")
+		
+	elseif string.match( numberA, '%-' ) then 
 
+		numberA = string.gsub(numberA, '%-', '' )
+		numberANegative = 1
+		print("A -")
+	
+	
+	elseif string.match( numberB, '%-' ) then
+		numberB = string.gsub(numberB, '%-', '' )
+		numberBNegative = 1
+		print("B -")
+
+	end
+		
 	-- Loop for calculations
 	for timesAdded=1, numberB do
 		answer = answer + numberA
 	end
-	answerText = display.newText( answer, 1800, 425, native.systemFont, 128 )
+	
+	if numberAAndBNegative == 1 then
+		answerText = display.newText( answer, 1800, 425, native.systemFont, 128 )
+	elseif numberANegative == 1 or numberBNegative == 1 then
+		answerText = display.newText( '-' .. answer, 1800, 425, native.systemFont, 128 )
+	else
+		answerText = display.newText( answer, 1800, 425, native.systemFont, 128 )
+	end
 	print( answer )
 end
 
-enterButton:addEventListener( 'touch', onEnterClicked)
+enterButton:addEventListener( 'tap', onEnterClicked)
