@@ -43,21 +43,16 @@ local function onEnterClicked( event )
 		
 		numberA = string.gsub(numberA, '%-', '' )
 		numberB = string.gsub(numberB, '%-', '' )
-		numberAAndBNegative = 1
-		print("both -")
+		numberAAndBNegative = true
 		
 	elseif string.match( numberA, '%-' ) then 
 
 		numberA = string.gsub(numberA, '%-', '' )
-		numberANegative = 1
-		print("A -")
-	
+		numberANegative = true
 	
 	elseif string.match( numberB, '%-' ) then
 		numberB = string.gsub(numberB, '%-', '' )
-		numberBNegative = 1
-		print("B -")
-
+		numberBNegative = true
 	end
 		
 	-- Loop for calculations
@@ -65,9 +60,9 @@ local function onEnterClicked( event )
 		answer = answer + numberA
 	end
 	
-	if numberAAndBNegative == 1 then
+	if numberAAndBNegative == true then
 		answerText = display.newText( answer, 1800, 425, native.systemFont, 128 )
-	elseif numberANegative == 1 or numberBNegative == 1 then
+	elseif numberANegative == true or numberBNegative == true then
 		answerText = display.newText( '-' .. answer, 1800, 425, native.systemFont, 128 )
 	else
 		answerText = display.newText( answer, 1800, 425, native.systemFont, 128 )
